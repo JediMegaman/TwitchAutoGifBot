@@ -10,8 +10,13 @@
           background-color:transparent;
       }
       #gifContainer {
-          width:1920;
-          height:1080;
+          width:1280px;
+          height:720px; /*
+          width: 75vw;
+          height: 75vh; */
+          <% if(offlineDebugMode == true){ %>
+            border: black solid medium;
+          <% } %>
       }
       .attrGif {
         color: #000;
@@ -27,24 +32,29 @@
         right:5px;
       }
       .prompt {
-        padding-left: 0.25em;
+        padding-left: 0.33em;
         position: absolute;
         bottom:0;
         left:0;
-        font-size:8pt;
+        font-size:12pt;
       }
 
   </style>
   </head>
-  <body>
+  <body <% if(offlineDebugMode == true){ %> style="border: red solid thin;"<% } %> >
     <div id="gifContainer">
       <% for(var gif in gifs){ %>
         <div style=" position:absolute; top: <%= gifs[gif].top %>px; left: <%= gifs[gif].left %>px; 
-        width: <%= gifs[gif].width %>px; height: <%= gifs[gif].height %>px" class="attrGif">
+         width: <%= gifs[gif].width %><%= gifs[gif].unit %>;
+         height: <%= gifs[gif].height %><%= gifs[gif].unit %>
+         <%= gifs[gif].fullMode %>"
+          class="attrGif">
           
           <img  src= <%= gifs[gif].src %>>
           <div class="prompt"><%= gifs[gif].prompt %></div>
           <div class="username"><%= gifs[gif].username %></div>
+          <img  src="Poweredby_100px-White_VertLogo.png" 
+          width="101px" height="36px" title="Powerd By Giphy" alt="Powerd By Giphy" style="margin-top: -8px" />
         </div>
         <% } %>
     </div>
