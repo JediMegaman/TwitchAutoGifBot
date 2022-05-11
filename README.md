@@ -61,3 +61,70 @@ Command (useable by anyone):
 - reduce overlap of gifs by excluding occupied regions
 - give channel owner ability to remove gif
 - ban people from using bot
+
+### Installation steps:
+1. Create folder in desired install location:
+	mkdir Documents/TwitchBot
+
+2. Open cmd line
+	<Windows key>+<r> cmd <enter>
+
+3. (if you haven't created the folder yet)
+	mkdir Documents/TwitchBot <enter>
+
+4. set current directory to the new folder.
+	cd Documents/TwitchBot <enter>
+
+5. Check if Node is installed
+	Node <enter>
+[you should see:
+	Welcome to Node.js v17.5.0.
+	Type ".help" for more information.
+]
+	(if not, goto this url and follow install instructions: https://nodejs.org/en/download/ )
+
+6. Check if node package manager is installed:
+	npm <enter>
+[you should see:
+	npm <command>
+
+	Usage:
+
+	npm install        install all the dependencies in your project
+(and a bunch more following this)...
+]
+	(if not goto: https://www.npmjs.com/package/npm)
+
+7. initialize npm in your folder:
+	npm init --yes <enter>
+[see some stuff]
+
+8. install tmi (Twitch Messaging Interface)
+	npm install tmi.js@1.8.5
+or
+	npm i tmi.js
+[you should see:
+	added 6 packages, and audited 7 packages in 1s
+	found 0 vulnerabilities
+]
+
+9. check your 'TwitchBot' folder, and you should see a bunch of new files and folders in there.
+
+-- (Optional - for testing if you installed 'npm' and 'tmi.js' correctly) ---
+10. Open your code IDE, such as VSCode (free), open the TwitchBot folder, and create a file called index.js in the same directory as your package.json (which should be TwitchBot).
+
+11. (test if your current project can read messages from your twitch chat): 
+
+------
+
+ 12. download this code from :https://github.com/JediMegaman/TwitchAutoGifBot, into a subfolder in your TwitchBot Folder (such as TwitchBot/TwitchAutoGifBot)
+ 
+ 13. Get Giphy beta API key : 
+	Apply for an API Key(s)
+		https://developers.giphy.com/dashboard/
+		Create a GIPHY API Key by clicking “Create an App” on the Developer Dashboard (you need to create an account first).
+		Note: All API Keys start as beta keys, which are rate limited (42 reads per hour and 1000 searches/API calls per day.)
+		Enter App name and Description, <create>.
+		copy paste the generated API Key into the .env file at the end of the line that says "GIPHY_API_KEY="
+
+
