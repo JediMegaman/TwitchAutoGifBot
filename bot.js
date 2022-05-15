@@ -27,9 +27,10 @@ let spawnPoints ={ x:0, y:0};
 let prevSpawnPoints ={ x:0, y:0};
 
 let intervalId = setInterval(shiftGifs, eraseDelaySecs * 1000);
+let intervalEraseId= setInterval(removeGifs, eraseDelaySecs * 1000);
 
 app.get('/', function (req, res) {
-    res.render('gifPage', {"gifs": gifs, "offlineDebugMode": offlineDebugMode});
+    res.render('gifPage', {"gifs": gifs, "offlineDebugMode": offlineDebugMode, "streamWidth": streamWidth, "streamHeight": streamHeight});
 });
 
 app.listen(port, function() {
@@ -144,12 +145,14 @@ function onMessageHandler (target, context, msg, self) {
         if(oneAtATimeMode){
             numGifsDisplayed = 1;
             if(eraseDelaySecs > 10){ //probably shouldn't have users waiting too long to see the gifs they queued.
-                eraseDelaySecs = 8;
+                eraseDelaySecs = 7;
             }
             clearInterval(intervalId);
             intervalId = setInterval(shiftGifs, eraseDelaySecs * 1000);
         } else {
             numGifsDisplayed = process.env.DEFAULT_NUM_GIFS;
+            eraseDelaySecs = process.env.DEFAULT_GIF_DISPLAY_TIME;
+            intervalEraseId = setInterval(removeGifs, eraseDelaySecs * 1000);
         }
         reply = `* Switching OneAtATimeMode to ${oneAtATimeMode} * `;
         console.log(reply);
@@ -237,12 +240,16 @@ function findGif (command, target, username) {
             prevGifWidth = width;
             prevGifHeight = height;
 
-            gifs.push({"src":response.data[gifNumber].images.original.url, "top": top,
+            if(oneAtATimeMode && gifs.length > 0){
+                gifsQueue.push({"src":response.data[gifNumber].images.original.url, "top": top,
              "left": left,"width": width, "height": height, "unit": unit,
              "prompt": command, "username": username});
-            if(gifs.length > numGifsDisplayed && !oneAtATimeMode) {
-                gifs.shift();
+            } else {
+                gifs.push({"src":response.data[gifNumber].images.original.url, "top": top,
+             "left": left,"width": width, "height": height, "unit": unit,
+             "prompt": command, "username": username});
             }
+
         })
         .catch((err) => {
             console.error(err);
@@ -258,9 +265,35 @@ function randomNum(maxNum) {
     return Math.floor(Math.random() * maxNum);
 }
 
+/**
+ * Handles how quickly the gifs are displayed when using OneAtATimeMode
+ */
 function shiftGifs() {
-    if(gifs.length > 0){
+    if(gifs.length > 0 || gifsQueue.length > 0){
+        if(!oneAtATimeMode){
+            // gifs.shift();
+            // console.log("Bot: removing normal gif at scheduled time.");
+        } else {
+            gifs.shift();
+            if(gifsQueue.length > 0){
+                //do{
+                    gifs.push(gifsQueue.shift());
+                    console.log("Bot: showing new gif at scheduled time.");
+                //} while (gifs.length < numGifsDisplayed);
+            }
+        }
+        console.log("Bot: Gif Shift attempted. Praise me, or shun me.");
+    }
+}
+
+/**
+ * When running a mode that shows the gifs all at once, this function runs to remove them
+ *  after they've each showed for the preset amount of time.
+ */
+function removeGifs(){
+    if(gifs.length > 0 || !oneAtATimeMode) {
         gifs.shift();
+        console.log("Bot: removing normal gif at scheduled time.");
     }
 }
 
