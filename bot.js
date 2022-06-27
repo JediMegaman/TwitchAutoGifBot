@@ -152,6 +152,7 @@ function onMessageHandler (target, context, msg, self) {
         } else {
             numGifsDisplayed = process.env.DEFAULT_NUM_GIFS;
             eraseDelaySecs = process.env.DEFAULT_GIF_DISPLAY_TIME;
+            clearInterval(intervalEraseId);
             intervalEraseId = setInterval(removeGifs, eraseDelaySecs * 1000);
         }
         reply = `* Switching OneAtATimeMode to ${oneAtATimeMode} * `;
@@ -240,6 +241,18 @@ function findGif (command, target, username) {
             prevGifWidth = width;
             prevGifHeight = height;
 
+
+            //restart timer if there are no gifs showing yet
+            if(gifs.length == 0){
+                if(oneAtATimeMode){
+                    clearInterval(intervalId);
+                    intervalId = setInterval(shiftGifs, eraseDelaySecs * 1000);
+                } else {
+                    clearInterval(intervalEraseId);
+                    intervalEraseId = setInterval(removeGifs, eraseDelaySecs * 1000);
+                }
+            }
+
             if(oneAtATimeMode && gifs.length > 0){
                 gifsQueue.push({"src":response.data[gifNumber].images.original.url, "top": top,
              "left": left,"width": width, "height": height, "unit": unit,
@@ -291,7 +304,7 @@ function shiftGifs() {
  *  after they've each showed for the preset amount of time.
  */
 function removeGifs(){
-    if(gifs.length > 0 || !oneAtATimeMode) {
+    if(gifs.length > 0 && !oneAtATimeMode) {
         gifs.shift();
         console.log("Bot: removing normal gif at scheduled time.");
     }
