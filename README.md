@@ -13,7 +13,7 @@ node.js
 ### Running the bot
 Clone this repo to your computer
 
-Create a .env file with the following variables in this directory:
+Create a file with the fullname ".env", with the following variables into the TwitchAutoGifBot directory (yes, you can copy/paste this):
 
 ```
 # .env
@@ -64,16 +64,16 @@ Command (useable by anyone):
 
 ### Installation steps:
 1. Create folder in desired install location:
-	mkdir Documents/TwitchBot
+	mkdir Documents/TwitchAutoGifBot
 
 2. Open cmd line
 	<Windows key>+<r> cmd <enter>
 
 3. (if you haven't created the folder yet)
-	mkdir Documents/TwitchBot <enter>
+	mkdir Documents/TwitchAutoGifBot <enter>
 
 4. set current directory to the new folder.
-	cd Documents/TwitchBot <enter>
+	cd Documents/TwitchAutoGifBot <enter>
 
 5. Check if Node is installed
 	Node <enter>
@@ -108,7 +108,10 @@ or
 	found 0 vulnerabilities
 ]
 
-9. check your 'TwitchBot' folder, and you should see a bunch of new files and folders in there.
+8.5 : install the rest of all the node packages
+		npm install
+
+9. check your 'TwitchAutoGifBot' folder, and you should see a bunch of new files and folders in there.
 
 -- (Optional - for testing if you installed 'npm' and 'tmi.js' correctly) ---
 10. Open your code IDE, such as VSCode (free), open the TwitchBot folder, and create a file called index.js in the same directory as your package.json (which should be TwitchBot).
@@ -117,7 +120,7 @@ or
 
 ------
 
- 12. download this code from :https://github.com/JediMegaman/TwitchAutoGifBot, into a subfolder in your TwitchBot Folder (such as TwitchBot/TwitchAutoGifBot)
+ 12. download this code from :https://github.com/JediMegaman/TwitchAutoGifBot, into your TwitchAutoGifBot Folder :
  
  13. Get Giphy beta API key : 
 	Apply for an API Key(s)

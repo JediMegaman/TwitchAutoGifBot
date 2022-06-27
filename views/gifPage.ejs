@@ -10,8 +10,8 @@
           background-color:transparent;
       }
       #gifContainer {
-          width:1280px;
-          height:720px; /*
+          width:1420px;
+          height:900px; /*
           width: 75vw;
           height: 75vh; */
           <% if(offlineDebugMode == true){ %>
@@ -23,6 +23,8 @@
         font-size:16pt;
         font-family: 'Oswald', Arial, Helvetica, sans-serif;
         text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        max-width: <%= streamWidth %>px;
+        max-height: <%= streamHeight %>px;
       }
       .username {
         padding-left: 0.25em;
