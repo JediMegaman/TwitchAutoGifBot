@@ -8,7 +8,7 @@ node.js
 
 [Twitch oauth key for your bot's account](https://twitchapps.com/tmi/)
 
-[Giphy api key](https://developers.giphy.com/)
+[Giphy api key](https://developers.giphy.com/) (optional)
 
 ### Running the bot
 Clone this repo to your computer
